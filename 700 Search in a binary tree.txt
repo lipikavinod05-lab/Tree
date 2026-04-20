@@ -1,0 +1,21 @@
+struct TreeNode* searchBST(struct TreeNode* root, int val) {
+    if(root==NULL)
+    return NULL;
+
+    if(val<root->val)
+    {
+       return searchBST(root->left,val);
+    }
+
+     if(val>root->val)
+    {
+        return searchBST(root->right,val);
+    }
+
+    if(val==root->val)
+    return root;
+
+    
+    return NULL;
+
+}
