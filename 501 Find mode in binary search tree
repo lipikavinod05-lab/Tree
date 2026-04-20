@@ -1,0 +1,54 @@
+int *result = NULL;
+int resultSize = 0;
+int capacity = 0;
+
+int count = 0;
+int maxCount = 0;
+struct TreeNode* prevNode = NULL;
+
+void addResult(int val) {
+    if (resultSize == capacity) {
+        capacity = (capacity == 0) ? 1 : capacity * 2;
+        result = (int*)realloc(result, capacity * sizeof(int));
+    }
+    result[resultSize++] = val;
+}
+
+void inorder(struct TreeNode* root) {
+    if (root == NULL) return;
+
+    inorder(root->left);
+
+    if (prevNode != NULL && prevNode->val == root->val)
+        count++;
+    else
+        count = 1;
+
+    if (count > maxCount) {
+        maxCount = count;
+        resultSize = 0;   // reset result
+        addResult(root->val);
+    } 
+    else if (count == maxCount) {
+        addResult(root->val);
+    }
+
+    prevNode = root;
+
+    inorder(root->right);
+}
+
+int* findMode(struct TreeNode* root, int* returnSize) {
+    result = NULL;
+    resultSize = 0;
+    capacity = 0;
+
+    count = 0;
+    maxCount = 0;
+    prevNode = NULL;
+
+    inorder(root);
+
+    *returnSize = resultSize;
+    return result;
+}
