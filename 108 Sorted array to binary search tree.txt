@@ -1,0 +1,24 @@
+struct TreeNode* createNode(int val) {
+    struct TreeNode* node = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+    node->val = val;
+    node->left = node->right = NULL;
+    return node;
+}
+
+struct TreeNode* buildBST(int nums[], int low, int high) {
+    if (low > high)
+        return NULL;
+
+    int mid = (low + high) / 2;
+
+    struct TreeNode* root = createNode(nums[mid]);
+
+    root->left = buildBST(nums, low, mid - 1);
+    root->right = buildBST(nums, mid + 1, high);
+
+    return root;
+}
+
+struct TreeNode* sortedArrayToBST(int nums[], int size) {
+    return buildBST(nums, 0, size - 1);
+}
