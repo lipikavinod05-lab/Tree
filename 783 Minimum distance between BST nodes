@@ -1,0 +1,36 @@
+int diff;
+struct TreeNode* prevNode = NULL;
+
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+int absVal(int x) {
+    return (x < 0) ? -x : x;
+}
+
+void dfs(struct TreeNode* root) {
+    if (root == NULL) return;
+
+    
+    dfs(root->left);
+
+   
+    if (prevNode != NULL) {
+        diff = min(diff, absVal(prevNode->val - root->val));
+    }
+
+    prevNode = root;
+
+   
+    dfs(root->right);
+}
+
+int minDiffInBST(struct TreeNode* root) {
+    diff = INT_MAX;
+    prevNode = NULL;
+
+    dfs(root);
+
+    return diff;
+}
